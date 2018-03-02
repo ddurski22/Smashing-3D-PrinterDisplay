@@ -1,0 +1,26 @@
+$background-color:  #dc5945;
+
+$title-color:       rgba(255, 255, 255, 0.7);
+$time-color:    rgba(255, 255, 255, 0.3);
+
+
+// ----------------------------------------------------------------------------
+// Widget-graph styles
+// ----------------------------------------------------------------------------
+.widget-time {
+
+  background-color: $background-color;
+
+  vertical-align: middle;
+
+  .title {
+    color: $title-color;
+  }
+
+  .time {
+    font-weight: 600;
+    color: $time-color;
+  }
+
+
+}

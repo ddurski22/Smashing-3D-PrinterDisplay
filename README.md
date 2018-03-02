@@ -1,1 +1,1 @@
-# Smashing-3D-PrinterDisplay
+Check out http://smashing.github.io/ for more information.

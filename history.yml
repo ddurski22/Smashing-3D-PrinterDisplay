@@ -1,0 +1,9 @@
+---
+ex1temp: "data: {\"temperature\":23.1,\"id\":\"ex1temp\",\"updatedAt\":1519962180}\n\n"
+ex2temp: "data: {\"temperature\":23.4,\"id\":\"ex2temp\",\"updatedAt\":1519962180}\n\n"
+bedtemp: "data: {\"temperature\":20.0,\"id\":\"bedtemp\",\"updatedAt\":1519962180}\n\n"
+progress: "data: {\"value\":0,\"id\":\"progress\",\"updatedAt\":1519962180}\n\n"
+status: "data: {\"text\":\"Idle\",\"id\":\"status\",\"updatedAt\":1519962180}\n\n"
+job_name: "data: {\"text\":\"N/A\",\"id\":\"job_name\",\"updatedAt\":1519962180}\n\n"
+remaining: "data: {\"days\":0,\"hours\":0,\"minutes\":0,\"seconds\":0,\"id\":\"remaining\",\"updatedAt\":1519962180}\n\n"
+elapsed: "data: {\"days\":0,\"hours\":0,\"minutes\":0,\"seconds\":0,\"id\":\"elapsed\",\"updatedAt\":1519962180}\n\n"

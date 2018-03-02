@@ -1,0 +1,26 @@
+$background-color:  #dc5945;
+
+$title-color:       rgba(255, 255, 255, 0.7);
+$time-color:    rgba(255, 255, 255, 1);
+
+
+// ----------------------------------------------------------------------------
+// Widget-graph styles
+// ----------------------------------------------------------------------------
+.widget-countdown {
+
+  background-color: $background-color;
+
+  vertical-align: middle;
+
+  .title {
+    font-size: 180%;
+    color: $title-color;
+  }
+
+  .category {
+    color: $time-color;
+    font-size: 220%;
+  }
+
+}
