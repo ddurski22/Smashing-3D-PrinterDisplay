@@ -12,22 +12,28 @@ SCHEDULER.every '5s', :first_in => 0 do |job|
   
   if response.code.to_i == 200
     data = JSON.parse(response.body)
+	
+	temps=Hash.new
 
-    #ex1temp = data['heads'][0]['extruders'][0]['hotend']['temperature']['current']
+    ex1temp = data['heads'][0]['extruders'][0]['hotend']['temperature']['current']
     #send_event('ex1temp', { temperature: ex1temp })
 
-    #ex2temp = data['heads'][0]['extruders'][1]['hotend']['temperature']['current']
+    ex2temp = data['heads'][0]['extruders'][1]['hotend']['temperature']['current']
     #send_event('ex2temp', { temperature: ex2temp })
 
     bedtemp = data['bed']['temperature']['current']
-    send_event('bedtemp', { temperature: bedtemp })
+    #send_event('bedtemp', { temperature: bedtemp })
 
+	temps['temp 1']= bedtemp
+	temps['temp 2']= ex1temp
+	temps['temp 3']= ex2temp
+	send_event(temps,temp)
   else
     temp = Hash.new
     temp['temperature'] = ''
-    #send_event('ex1temp', temp)
-    #send_event('ex2temp', temp)
-    send_event('bedtemp', temp)
+    send_event('temp 2', temp)
+    send_event('temp 3', temp)
+    send_event('temp 1', temp)
   end
 
   url = URI.join(host, 'api/v1/print_job')
@@ -86,6 +92,7 @@ SCHEDULER.every '5s', :first_in => 0 do |job|
     elapsed['seconds'] = total_sec % seconds_in_minute
 
     send_event('elapsed', elapsed)
+	
 	
 
 
