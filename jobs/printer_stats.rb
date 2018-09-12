@@ -7,48 +7,51 @@ SCHEDULER.every '5s', :first_in => 0 do |job|
   host2 = 'http://10.76.100.44/'
 
   url = URI.join(host, 'api/v1/printer')
-  
+
   response = Net::HTTP.get_response(url)
-  
+
   if response.code.to_i == 200
     data = JSON.parse(response.body)
-	
-	temps=Hash.new
 
-    ex1temp = data['heads'][0]['extruders'][0]['hotend']['temperature']['current']
+	  temps=Hash.new
+
+    ex1temp = data['heads'][0]['extruders'][0]['hotend']['temperature']['current'].to_s
     #send_event('ex1temp', { temperature: ex1temp })
 
-    ex2temp = data['heads'][0]['extruders'][1]['hotend']['temperature']['current']
+    ex2temp = data['heads'][0]['extruders'][1]['hotend']['temperature']['current'].to_s
     #send_event('ex2temp', { temperature: ex2temp })
 
-    bedtemp = data['bed']['temperature']['current']
-    #send_event('bedtemp', { temperature: bedtemp })
+    bedtemp =data['bed']['temperature']['current'].to_s
+    #send_event('temp', { temperature: bedtemp })
 
-	temps['temp 1']= bedtemp
-	temps['temp 2']= ex1temp
-	temps['temp 3']= ex2temp
-	send_event(temps,temp)
+	temps['temp1']= bedtemp
+	temps['temp2']= ex1temp
+	temps['temp3']= ex2temp
+	send_event('bedtemp',temps)
   else
     temp = Hash.new
-    temp['temperature'] = ''
-    send_event('temp 2', temp)
-    send_event('temp 3', temp)
-    send_event('temp 1', temp)
+    temp['temp 1'] = ''
+    temp['temp 2'] = ''
+    temp['temp 3'] = ''
+    #send_event('temp 2', temp)
+    #send_event('temp 3', temp)
+    send_event('bedtemp', temp)
   end
 
   url = URI.join(host, 'api/v1/print_job')
   response = Net::HTTP.get_response(url)
-  
-  if response.code.to_i == 200 
+
+  if response.code.to_i == 200
     data = JSON.parse(response.body)
 	send_event('progress', { value: (data['progress'] * 100).to_i })
 
     status = data['state']
 	status_str = status.split('_').map!(&:capitalize).join(' ')
 	send_event('status', { text: status_str })
-	
+
     job_name = data['name']
     job_name_str = job_name.split('_').join(' ')
+    job_name_str = job_name.split('G').join(' ')
     send_event('job_name', { text: job_name_str })
 
     remaining = Hash.new
@@ -92,8 +95,8 @@ SCHEDULER.every '5s', :first_in => 0 do |job|
     elapsed['seconds'] = total_sec % seconds_in_minute
 
     send_event('elapsed', elapsed)
-	
-	
+
+
 
 
 
@@ -111,21 +114,21 @@ SCHEDULER.every '5s', :first_in => 0 do |job|
     send_event('remaining', remaining)
     send_event('elapsed', remaining)
   end
-  
+
   url = URI.join(host2, 'api/v1/print_job')
   response = Net::HTTP.get_response(url)
-  
-  if response.code.to_i == 200 
+
+  if response.code.to_i == 200
     data = JSON.parse(response.body)
-	send_event('progress', { value: (data['progress'] * 100).to_i })
+	send_event('progress2', { value: (data['progress'] * 100).to_i })
 
     status = data['state']
 	status_str = status.split('_').map!(&:capitalize).join(' ')
 	send_event('status2', { text: status_str })
-	
+
     job_name = data['name']
     job_name_str = job_name.split('_').join(' ')
-    send_event('job_name', { text: job_name_str })
+    send_event('job_name2', { text: job_name_str })
 
     remaining = Hash.new
 
@@ -168,7 +171,7 @@ SCHEDULER.every '5s', :first_in => 0 do |job|
     elapsed['seconds'] = total_sec % seconds_in_minute
 
     send_event('elapsed2', elapsed)
-	
+
 
 
 
@@ -186,35 +189,38 @@ SCHEDULER.every '5s', :first_in => 0 do |job|
     send_event('remaining2', remaining)
     send_event('elapsed2', remaining)
    end
-	
+
 	url = URI.join(host2, 'api/v1/printer')
-  
+
   response = Net::HTTP.get_response(url)
-  
+
   if response.code.to_i == 200
     data = JSON.parse(response.body)
-	
-	
-	#ex1temp = data['heads'][0]['extruders'][0]['hotend']['temperature']['current']
+
+	  temps2=Hash.new
+
+    ex1temp = data['heads'][0]['extruders'][0]['hotend']['temperature']['current'].to_s
     #send_event('ex1temp', { temperature: ex1temp })
 
-    #ex2temp = data['heads'][0]['extruders'][1]['hotend']['temperature']['current']
+    ex2temp = data['heads'][0]['extruders'][1]['hotend']['temperature']['current'].to_s
     #send_event('ex2temp', { temperature: ex2temp })
-	
-	
-    bedtemp = data['bed']['temperature']['current']
-    send_event('bedtemp2', { temperature: bedtemp })
+    bedtemp = data['bed']['temperature']['current'].to_s
+    #send_event('temp', { temperature: bedtemp })
 
+	  temps2['temp1']= bedtemp
+    temps2['temp2']= ex1temp
+    temps2['temp3']= ex2temp
+    send_event('bedtemp2',temps2)
   else
     temp = Hash.new
-    temp['temperature'] = ''
-    #send_event('ex1temp', temp)
-    #send_event('ex2temp', temp)
+    temp['temp 1'] = ''
+    temp['temp 2'] = ''
+    temp['temp 3'] = ''
     send_event('bedtemp2', temp)
   end
 
-	
-	
-  
-  
+
+
+
+
 end

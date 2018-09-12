@@ -1,14 +1,16 @@
-$background-color:  #12b0c5;
-$value-color:       #fff;
+$background-color:  #dc5945;
 
 $title-color:       rgba(255, 255, 255, 0.7);
-$label-color:       rgba(255, 255, 255, 0.7);
-$moreinfo-color:    rgba(255, 255, 255, 0.7);
+$time-color:    rgba(255, 255, 255, 1);
 
 
+// ----------------------------------------------------------------------------
+// Widget-graph styles
+// ----------------------------------------------------------------------------
 .widget-temps {
 
   background-color: $background-color;
+
   vertical-align: middle;
 
   .title {
@@ -18,7 +20,8 @@ $moreinfo-color:    rgba(255, 255, 255, 0.7);
 
   .value {
     font-weight: 600;
-    color: $value-color;
-    font-size: 500%
+    color: $time-color;
+    font-size: 220%;
   }
+
 }
